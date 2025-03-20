@@ -5,10 +5,12 @@ using UnityEngine;
 public class Test : MonoBehaviour
 {
     public float speed;
-    Vector3 targetPos = Vector3.zero;
+    Vector3 targetPos;
+    
 
     void Start()
     {
+        targetPos = transform.position;
         //Translate(new Vector3(0, 10, 10));
         //transform.position = new Vector3(0, 4, 5);
     }
