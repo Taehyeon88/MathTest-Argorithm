@@ -1,38 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class Scene1 : MonoBehaviour
+public class Scene2 : MonoBehaviour
 {
     public Transform target;
     public float speed = 3f;
-    public float rate = 10f;
     private float angle = 0;
-    private Vector3 startPos;
+
     private float timer = 0;
 
-    private void Start()
+    void Start()
     {
-        startPos = transform.localPosition;
+        
     }
+
+    // Update is called once per frame
     void Update()
     {
         Move();
     }
+
     private void Move()
     {
         timer += Time.deltaTime;
-        angle = 360 * (timer / rate) -90;
+        angle = 360 * (timer / 10) - 90;
+        Debug.Log(angle);
 
-        if (timer > rate)
+        if (timer > 10)
         {
             timer = 0;
-            transform.localPosition = startPos; //달이 괴도를 벗어난 것 방지용
         }
         float radians = angle * Mathf.Deg2Rad;
-        Vector3 direction2 = new Vector3(Mathf.Sin(radians), 0, Mathf.Cos(radians));
+        Vector3 direction2 = new Vector3(Mathf.Cos(radians), 0, Mathf.Sin(radians));
         transform.position += direction2 * speed * Time.deltaTime;
     }
 }
