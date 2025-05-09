@@ -8,6 +8,8 @@ public class Task9_2 : MonoBehaviour
     [SerializeField] private LayerMask enemyLayer;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private float bulletDPS = 2f;
+    [SerializeField] private float bulletForce = 10f;
+    [SerializeField] private Material lineRedererMaterial;
 
     private float timer = 0;
     private LineRenderer lr;
@@ -29,10 +31,7 @@ public class Task9_2 : MonoBehaviour
         {
             lr = GetComponent<LineRenderer>();
             lr.widthMultiplier = 0.05f;
-            lr.material = new Material(Shader.Find("Unlit/Color"))
-            {
-                color = Color.red
-            };
+            lr.material = lineRedererMaterial;
         }
         lr.positionCount = 2;
     }
@@ -56,12 +55,14 @@ public class Task9_2 : MonoBehaviour
         {
             PlayLineRenderer(target);
             timer += Time.deltaTime;
+            Debug.Log(timer);
+            Debug.Log(target.transform.position);
             if (timer >= bulletDPS)
             {
-                Vector3 dir = target.transform.position - transform.position;
+                Vector3 dir = (target.transform.position - transform.position).normalized;
                 GameObject temp = Instantiate(bulletPrefab, transform.position + transform.forward * 0.2f, Quaternion.identity);
                 Rigidbody rb = temp.GetComponent<Rigidbody>();
-                rb.AddForce(dir * 0.2f, ForceMode.Acceleration);
+                rb.AddForce(dir * bulletForce, ForceMode.Impulse);
 
                 timer = 0;
             }

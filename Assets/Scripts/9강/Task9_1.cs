@@ -11,9 +11,16 @@ public class Task9_1 : MonoBehaviour
     [SerializeField] private float duration = 2.0f;
     [SerializeField] private float t = 0f;
 
+    //실습과제용 변수
+    Renderer renderer;
+    Color savedColor;
     void Start()
     {
-        
+        renderer = GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            savedColor = renderer.material.color;
+        }
     }
 
     // Update is called once per frame
@@ -66,5 +73,22 @@ public class Task9_1 : MonoBehaviour
         t += Time.deltaTime / duration;
 
         transform.position = Vector3.LerpUnclamped(startPos.position, endPos.position, t);
+    }
+
+    //실습과제용
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Bullet"))
+        {
+            StartCoroutine(HitAction());
+            Destroy(collision.gameObject);
+        }
+    }
+
+    IEnumerator HitAction()
+    {
+        renderer.material.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        renderer.material.color = savedColor;
     }
 }
