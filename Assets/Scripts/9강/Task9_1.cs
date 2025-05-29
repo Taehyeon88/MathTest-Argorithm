@@ -81,7 +81,7 @@ public class Task9_1 : MonoBehaviour
         if (collision.collider.CompareTag("Bullet"))
         {
             StartCoroutine(HitAction());
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
         }
     }
 
